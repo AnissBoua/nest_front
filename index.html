@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Nest API</title>
+</head>
+<!-- use tailwind classes, dark theme page-->
+<body class="bg-gray-900 text-white">
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+        }
+    </style>
+    <div id="header"> 
+
+    </div>
+    <!-- STYLE WITH TAILWIND, display products like figures, pops and other manga anime stuff-->
+    <div class="container mx-auto my-8">
+        <h1 class="text-3xl text-center">Products</h1>
+        <div id="products" class="flex flex-wrap">
+        </div>
+    </div>
+
+        
+    <script>
+        // get the header from header.html
+        fetch('header.html')
+        .then(response => response.text())
+        .then(data => {
+            let header = document.getElementById('header');
+            header.innerHTML = data;
+            fetch('./js/header.js')
+            .then(response => response.text())
+            .then(data => {
+                let script = document.createElement('script');
+                script.innerHTML = data;
+                header.appendChild(script);
+            })
+        })
+    </script>
+    <script type="module">
+        import { getProducts } from './js/products.js'; 
+
+        try
+        {
+            await getProducts('http://localhost:3000/products');
+        }
+        catch(error)
+        {
+            console.log(error);
+        }
+    </script>
+</body>
+</html>
